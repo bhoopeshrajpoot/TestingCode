@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const socket  = io.connect("http://localhost:3032");
+
+        function sendMessage(e,v){
+            let value = v.value;
+            if(e.keyCode == 13){
+                socket.emit("chatMessage",{from:"front",to:"backend",message: value});
+            }
+        }
+
+        socket.on("receiveMessage",(data)=>{
+            console.log(data);
+        })
+
+
+    </script>
+</head>
+<body>
+    Type Message and then Press Enter: 
+    <input type="text" onkeyup="sendMessage(event,this)"/>
+</body>
+</html>
