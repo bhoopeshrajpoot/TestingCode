@@ -50,8 +50,10 @@ app.patch("/update/:id",(req,res)=>{
 
 });
 app.get("/read", async (req,res)=>{
-    let result = await prisma.user.findMany();
-    res.send(result);
+    // let result = await prisma.user.findMany();
+    // res.send(result);
+
+    res.send("this is read api ");
 
 });
 app.delete("/delete/:id",async (req,res)=>{
