@@ -1,7 +1,7 @@
 const express = require("express");
 const app = new express();
 const http = require("http");
-const socket = require("socket.io");
+// const socket = require("socket.io");
 const auth = require("./auth");
 const prisma = require("./prisma/index");
 
@@ -10,23 +10,22 @@ app.use(express.urlencoded({extended: true}));
 
 const server = http.createServer(app);
 
-const io = socket(server);
+// const io = socket(server);
 
 app.get("/",(req,res)=>{
     res.sendFile(`${__dirname}/index.html`);
 });
 
-app.post("/create",(req,res)=>{
+app.get("/create", async (req,res)=>{
 
-    const {name, email, password} = req.body;
+    // const {name, email, password} = req.body;
 
-    const result = prims.user.create({
+    const result = await prisma.testmy.create({
         data:{
-            name,
-            email,
-            password
+            name :"amit",
+            email :"kumar",
         }
-    })
+    });
 
     res.json({
         message:"Record created !",
@@ -66,18 +65,18 @@ app.delete("/delete/:id",async (req,res)=>{
     res.send("this is delete api !");
 });
 
-let roomname = "RoomId";
+// let roomname = "RoomId";
 
-io.on("connection",(socket)=>{
-    socket.join(roomname);
-    socket.on("chatMessage",(data)=>{
-        console.log(`Received at backend : ${data}`);
-        socket.to(roomname).emit("receiveMessage",data);
-    })
-    socket.on("disconnect",(socket)=>{
-        console.log(`socket connection disconnected : ${socket}`);
-    })
-});
+// io.on("connection",(socket)=>{
+//     socket.join(roomname);
+//     socket.on("chatMessage",(data)=>{
+//         console.log(`Received at backend : ${data}`);
+//         socket.to(roomname).emit("receiveMessage",data);
+//     })
+//     socket.on("disconnect",(socket)=>{
+//         console.log(`socket connection disconnected : ${socket}`);
+//     })
+// });
 
 server.listen(3032,()=>{
     console.log(`Server running on port : 3032`);

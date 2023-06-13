@@ -15,3 +15,10 @@ model User {
   email String  @unique
   name  String?
 }
+
+model testmy {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String?
+}
+
